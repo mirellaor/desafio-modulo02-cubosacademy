@@ -7,5 +7,7 @@ const rotas = express();
 rotas.post('/contas', intermediadores.verificaPreenchimentoCampos, intermediadores.verificaDadosRepetidos, contabancaria.criarConta);
 rotas.get('/contas', intermediadores.verificaListagemContas, contabancaria.listarContas);
 rotas.put('/contas/:numeroConta/usuario', intermediadores.verificaPreenchimentoCampos, intermediadores.verificaNumeroConta, intermediadores.verificaDadosRepetidosAtualizacao, contabancaria.atualizarConta);
+rotas.delete('/contas/:numeroConta', intermediadores.verificaNumeroConta, intermediadores.verificaSaldoZero, contabancaria.excluirConta);
+
 
 module.exports = rotas;
