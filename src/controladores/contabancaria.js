@@ -15,7 +15,14 @@ function listarContas(req, res) {
     res.status(201).json(contas);
 }
 
+function atualizarConta(req, res) {
+    const { numeroConta } = req.params;
+    contas[numeroConta - 1].usuario = req.body;
+    res.status(201);
+}
+
 module.exports = {
     criarConta,
-    listarContas
+    listarContas,
+    atualizarConta
 }
