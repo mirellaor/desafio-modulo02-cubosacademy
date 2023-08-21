@@ -1,9 +1,10 @@
 const express = require('express');
 const contabancaria = require('./controladores/contabancaria');
-const { verificacaoNovaConta } = require('./intermediadores');
+const intermediadores = require('./intermediadores');
 
 const rotas = express();
 
-rotas.post('/contabancaria', verificacaoNovaConta, contabancaria.criarConta);
+rotas.post('/contabancaria', intermediadores.verificacaoNovaConta, contabancaria.criarConta);
+rotas.get('/contabancaria', intermediadores.verificaListagemContas, contabancaria.listarContas);
 
 module.exports = rotas;
