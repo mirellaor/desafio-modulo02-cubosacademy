@@ -21,8 +21,16 @@ function atualizarConta(req, res) {
     res.status(201);
 }
 
+function excluirConta(req, res) {
+    const { numeroConta } = req.params;
+    const posicaoNumeroConta = (contas.findIndex((conta) => conta.numero === Number(numeroConta)));
+    contas.splice(posicaoNumeroConta, 1);
+    res.status(201);
+}
+
 module.exports = {
     criarConta,
     listarContas,
-    atualizarConta
+    atualizarConta,
+    excluirConta
 }
