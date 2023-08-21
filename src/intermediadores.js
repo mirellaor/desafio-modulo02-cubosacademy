@@ -13,6 +13,16 @@ function verificacaoNovaConta(req, res, next) {
     }
 }
 
+function verificaListagemContas(req, res, next) {
+    const { senha_banco } = req.query;
+    if (!(banco.senha === senha_banco)) {
+        res.status(403).json({ mensagem: "A senha do banco informada é inválida!" });
+    } else {
+        next();
+    }
+}
+
 module.exports = {
-    verificacaoNovaConta
+    verificacaoNovaConta,
+    verificaListagemContas
 }
