@@ -50,10 +50,22 @@ function verificaDadosRepetidosAtualizacao(req, res, next) {
     }
 }
 
+function verificaSaldoZero(req, res, next) {
+    const { numeroConta } = req.params;
+    const posicaoNumeroConta = (contas.findIndex((conta) => conta.numero === Number(numeroConta)));
+    if (contas[posicaoNumeroConta].saldo != 0) {
+        res.status(403).json({ mensagem: "A conta só pode ser removida se o saldo for zero!" });
+    } else {
+        next();
+    }
+}
+
+
 module.exports = {
     verificaPreenchimentoCampos,
     verificaListagemContas,
     verificaNumeroConta,
     verificaDadosRepetidos,
-    verificaDadosRepetidosAtualizacao
+    verificaDadosRepetidosAtualizacao,
+    verificaSaldoZero
 }
