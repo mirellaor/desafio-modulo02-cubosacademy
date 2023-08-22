@@ -120,6 +120,49 @@ function verificaSaldoSaque(req, res, next) {
     }
 }
 
+function verificacaoTransferencia(req, res, next) {
+    const { numero_conta_origem, numero_conta_destino, valor, senha } = req.body;
+    if (!numero_conta_origem || !valor || !numero_conta_destino || !senha) {
+        res.status(400).json({ mensagem: "`Preencha os dados, todos são obrigatórios!" });
+    } else {
+        next();
+    }
+}
+
+function verificaContasOrigemDestino(req, res, next) {
+    const { numero_conta_destino, numero_conta_origem } = req.body;
+    const numeroExistente1 = contas.find((item) => item.numero === Number(numero_conta_origem));
+    const numeroExistente2 = contas.find((item) => item.numero === Number(numero_conta_destino));
+    if (!numeroExistente1) {
+        res.status(404).json({ mensagem: "Essa conta de origem não existe." });
+    } else if (!numeroExistente2) {
+        res.status(404).json({ mensagem: "Essa conta de destino não existe." })
+    } else {
+        next();
+    }
+}
+
+function verificaSenhaOrigem(req, res, next) {
+    const { numero_conta_origem, senha } = req.body;
+    const posicaoNumero_conta = (contas.findIndex((conta) => conta.numero === Number(numero_conta_origem)));
+    const verificacaoSenha = (contas[posicaoNumero_conta].usuario.senha === (senha));
+    if (!verificacaoSenha) {
+        res.status(404).json({ mensagem: "A senha está incorreta." });
+    } else {
+        next();
+    }
+}
+
+function verificaSaldoOrigem(req, res, next) {
+    const { numero_conta_origem, valor } = req.body;
+    const posicaoNumero_conta = (contas.findIndex((conta) => conta.numero === Number(numero_conta_origem)));
+    const verificaSaldo = (contas[posicaoNumero_conta].saldo >= valor);
+    if (!verificaSaldo) {
+        res.status(422).json({ mensagem: "Essa conta não tem saldo suficiente para transferir." });
+    } else {
+        next();
+    }
+}
 
 
 
@@ -135,5 +178,9 @@ module.exports = {
     verificaExistenciaConta,
     verificaNumeroValoreSenha,
     verificaSenhaValida,
-    verificaSaldoSaque
+    verificaSaldoSaque,
+    verificacaoTransferencia,
+    verificaContasOrigemDestino,
+    verificaSenhaOrigem,
+    verificaSaldoOrigem
 }
