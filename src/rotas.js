@@ -12,7 +12,7 @@ rotas.put('/contas/:numeroConta/usuario', intermediadores.verificaPreenchimentoC
 rotas.delete('/contas/:numeroConta', intermediadores.verificaNumeroConta, intermediadores.verificaSaldoZero, contabancaria.excluirConta);
 rotas.post('/transacoes/depositar', intermediadores.verificaNumeroeDeposito, intermediadores.verificaExistenciaConta, intermediadores.verificaValorDeposito, transacoes.depositar);
 rotas.post('/transacoes/sacar', intermediadores.verificaNumeroValoreSenha, intermediadores.verificaExistenciaConta, intermediadores.verificaSenhaValida, intermediadores.verificaSaldoSaque, transacoes.sacar);
-
+rotas.post('/transacoes/transferir', intermediadores.verificacaoTransferencia, intermediadores.verificaContasOrigemDestino, intermediadores.verificaSenhaOrigem, intermediadores.verificaSaldoOrigem, transacoes.transferir);
 
 
 module.exports = rotas;
