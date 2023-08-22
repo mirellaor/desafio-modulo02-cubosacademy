@@ -4,7 +4,10 @@ function depositar(req, res) {
     const { numero_conta } = req.body;
     const posicaoNumero_conta = (contas.findIndex((conta) => conta.numero === Number(numero_conta)));
     contas[posicaoNumero_conta].saldo += req.body.valor;
-    res.status(201);
+
+    let dataNoDeposito = { data: new Date().toLocaleString(), ...req.body }
+    depositos.push(dataNoDeposito);
+    res.status(201).json({ Mensagem: "Valor depositado." });
 }
 
 
