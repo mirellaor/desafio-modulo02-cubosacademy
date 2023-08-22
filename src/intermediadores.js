@@ -32,7 +32,9 @@ function verificaListagemContas(req, res, next) {
 function verificaNumeroConta(req, res, next) {
     const { numeroConta } = req.params;
     const numeroExistente = contas.find((item) => item.numero === Number(numeroConta));
-    if (numeroExistente) {
+    if (!numeroExistente) {
+        res.status(404).json({ mensagem: "Não existe uma conta com esse número." });
+    } else {
         next();
     }
 }
@@ -60,6 +62,35 @@ function verificaSaldoZero(req, res, next) {
     }
 }
 
+function verificaNumeroeDeposito(req, res, next) {
+    const { numero_conta, valor } = req.body;
+    if (!numero_conta || !valor) {
+        res.status(400).json({ mensagem: "O número da conta e o valor são obrigatórios!" });
+    } else {
+        next();
+    }
+}
+
+function verificaValorDeposito(req, res, next) {
+    if (req.body.valor <= 0) {
+        res.status(400).json({ mensagem: "O valor para deposito deve ser maior que zero" });
+    } else {
+        next();
+    }
+}
+
+function verificaNumeroParaDepositar(req, res, next) {
+    const { numero_conta } = req.body;
+    const numeroExistente = contas.find((item) => item.numero === Number(numero_conta));
+    if (!numeroExistente) {
+        res.status(404).json({ mensagem: "Não existe uma conta com esse número." });
+    } else {
+        next();
+    }
+}
+
+
+
 
 module.exports = {
     verificaPreenchimentoCampos,
@@ -67,5 +98,8 @@ module.exports = {
     verificaNumeroConta,
     verificaDadosRepetidos,
     verificaDadosRepetidosAtualizacao,
-    verificaSaldoZero
+    verificaSaldoZero,
+    verificaNumeroeDeposito,
+    verificaValorDeposito,
+    verificaNumeroParaDepositar
 }
