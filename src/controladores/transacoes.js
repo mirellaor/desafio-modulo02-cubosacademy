@@ -15,6 +15,7 @@ function sacar(req, res) {
     const posicaoNumero_conta = (contas.findIndex((conta) => conta.numero === Number(numero_conta)));
     contas[posicaoNumero_conta].saldo -= req.body.valor;
 
+    delete req.body.senha;
     let dataNoSaque = { data: new Date().toLocaleString(), ...req.body }
     saques.push(dataNoSaque);
     res.status(201).json({ Mensagem: "Saque feito." });
