@@ -35,10 +35,18 @@ function transferir(req, res) {
     res.status(201).json({ Mensagem: "Transferência feita." });
 }
 
+function consultarSaldo(req, res) {
+    const { numero_conta } = req.query;
+    const posicaoNumero_conta = (contas.findIndex((conta) => conta.numero === Number(numero_conta)));
+    const mostrarSaldo = {}
+    mostrarSaldo.saldo = contas[posicaoNumero_conta].saldo
+    res.status(200).json(mostrarSaldo);
+}
 
 
 module.exports = {
     depositar,
     sacar,
-    transferir
+    transferir,
+    consultarSaldo
 }
