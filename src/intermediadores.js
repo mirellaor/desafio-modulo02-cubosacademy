@@ -164,6 +164,35 @@ function verificaSaldoOrigem(req, res, next) {
     }
 }
 
+function verificaContaSenhaQuery(req, res, next) {
+    const { numero_conta, senha } = req.query;
+    if (!numero_conta || !senha) {
+        res.status(400).json({ mensagem: "O número da conta e a senha são obrigatórios!" });
+    } else {
+        next();
+    }
+}
+
+function verificaContaExisteQuery(req, res, next) {
+    const { numero_conta } = req.query;
+    const numeroExistente = contas.find((item) => item.numero === Number(numero_conta));
+    if (!numeroExistente) {
+        res.status(404).json({ mensagem: "Não existe uma conta com esse número." });
+    } else {
+        next();
+    }
+}
+
+function verificaSenhaQuery(req, res, next) {
+    const { numero_conta, senha } = req.query;
+    const posicaoNumero_conta = (contas.findIndex((conta) => conta.numero === Number(numero_conta)));
+    const verificacaoSenha = (contas[posicaoNumero_conta].usuario.senha === (senha));
+    if (!verificacaoSenha) {
+        res.status(404).json({ mensagem: "A senha está incorreta." });
+    } else {
+        next();
+    }
+}
 
 
 module.exports = {
@@ -182,5 +211,8 @@ module.exports = {
     verificacaoTransferencia,
     verificaContasOrigemDestino,
     verificaSenhaOrigem,
-    verificaSaldoOrigem
+    verificaSaldoOrigem,
+    verificaContaSenhaQuery,
+    verificaContaExisteQuery,
+    verificaSenhaQuery
 }
