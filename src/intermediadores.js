@@ -79,11 +79,42 @@ function verificaValorDeposito(req, res, next) {
     }
 }
 
-function verificaNumeroParaDepositar(req, res, next) {
+function verificaExistenciaConta(req, res, next) {
     const { numero_conta } = req.body;
     const numeroExistente = contas.find((item) => item.numero === Number(numero_conta));
     if (!numeroExistente) {
         res.status(404).json({ mensagem: "Não existe uma conta com esse número." });
+    } else {
+        next();
+    }
+}
+
+function verificaNumeroValoreSenha(req, res, next) {
+    const { numero_conta, valor, senha } = req.body;
+    if (!numero_conta || !valor || !senha) {
+        res.status(400).json({ mensagem: "O número da conta, o valor do saque e a senha são obrigatórios!" });
+    } else {
+        next();
+    }
+}
+
+function verificaSenhaValida(req, res, next) {
+    const { numero_conta, senha } = req.body;
+    const posicaoNumero_conta = (contas.findIndex((conta) => conta.numero === Number(numero_conta)));
+    const verificacaoSenha = (contas[posicaoNumero_conta].usuario.senha === (senha));
+    if (!verificacaoSenha) {
+        res.status(404).json({ mensagem: "A senha está incorreta." });
+    } else {
+        next();
+    }
+}
+
+function verificaSaldoSaque(req, res, next) {
+    const { numero_conta, valor } = req.body;
+    const posicaoNumero_conta = (contas.findIndex((conta) => conta.numero === Number(numero_conta)));
+    const verificaSaldo = (contas[posicaoNumero_conta].saldo >= valor);
+    if (!verificaSaldo) {
+        res.status(422).json({ mensagem: "Essa conta não tem saldo suficiente para esse saque." });
     } else {
         next();
     }
@@ -101,5 +132,8 @@ module.exports = {
     verificaSaldoZero,
     verificaNumeroeDeposito,
     verificaValorDeposito,
-    verificaNumeroParaDepositar
+    verificaExistenciaConta,
+    verificaNumeroValoreSenha,
+    verificaSenhaValida,
+    verificaSaldoSaque
 }
