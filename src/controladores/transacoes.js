@@ -21,10 +21,24 @@ function sacar(req, res) {
     res.status(201).json({ Mensagem: "Saque feito." });
 }
 
+function transferir(req, res) {
+    const { numero_conta_origem, numero_conta_destino } = req.body;
+    const posicaoContaOrigem = (contas.findIndex((conta) => conta.numero === Number(numero_conta_origem)));
+    const posicaoContaDestino = (contas.findIndex((conta) => conta.numero === Number(numero_conta_destino)));
+    contas[posicaoContaOrigem].saldo -= req.body.valor;
+    contas[posicaoContaDestino].saldo += req.body.valor;
+
+    delete req.body.senha;
+    let dataNaTransferencia = { data: new Date().toLocaleString(), ...req.body }
+    transferencias.push(dataNaTransferencia);
+    console.log(transferencias);
+    res.status(201).json({ Mensagem: "Transferência feita." });
+}
 
 
 
 module.exports = {
     depositar,
-    sacar
+    sacar,
+    transferir
 }
