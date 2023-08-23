@@ -31,7 +31,6 @@ function transferir(req, res) {
     delete req.body.senha;
     let dataNaTransferencia = { data: new Date().toLocaleString(), ...req.body }
     transferencias.push(dataNaTransferencia);
-    console.log(transferencias);
     res.status(201).json({ Mensagem: "Transferência feita." });
 }
 
@@ -43,10 +42,21 @@ function consultarSaldo(req, res) {
     res.status(200).json(mostrarSaldo);
 }
 
+function emitirExtrato(req, res) {
+    const extrato = { depositoss: [], saquess: [], transferenciasEnviadas: [], transferenciasRecebidas: [] }
+    const { numero_conta } = req.query;
+    extrato.depositoss.push(...depositos.filter((item) => item.numero_conta === Number(numero_conta)));
+    extrato.saquess.push(...saques.filter((item) => item.numero_conta === Number(numero_conta)));
+    extrato.transferenciasEnviadas.push(...transferencias.filter((item) => item.numero_conta_origem === Number(numero_conta)));
+    extrato.transferenciasRecebidas.push(...transferencias.filter((item) => item.numero_conta_destino === Number(numero_conta)));
+    res.status(200).json(extrato);
+}
+
 
 module.exports = {
     depositar,
     sacar,
     transferir,
-    consultarSaldo
+    consultarSaldo,
+    emitirExtrato
 }
