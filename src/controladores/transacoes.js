@@ -1,4 +1,4 @@
-const { banco, contas, saques, depositos, transferencias } = require('../bancodedados');
+const { banco, contas, saques, depositos, transferencias } = require('../dados/bancodedados');
 
 function depositar(req, res) {
     const { numero_conta } = req.body;

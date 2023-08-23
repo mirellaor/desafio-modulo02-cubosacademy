@@ -1,4 +1,4 @@
-const { banco, contas, saques, depositos, transferencias } = require('./bancodedados');
+const { banco, contas, saques, depositos, transferencias } = require('../dados/bancodedados');
 
 function verificaPreenchimentoCampos(req, res, next) {
     const { nome, cpf, data_nascimento, telefone, email, senha } = req.body;
