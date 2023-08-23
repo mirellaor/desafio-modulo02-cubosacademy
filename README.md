@@ -161,5 +161,9 @@ Por enquanto, ainda não vimos como integrar o banco de dados na nossa API, ent�
 
 - Para executar o projeto, é preciso que vc instale todos os pacotes e dependecias na sua máquina.
 - Para facilitar, disponibilizei o arquivo do insomnia para testar todas as rotas e funcionalidades.
+
+#### No gif abaixo, mostra um pouco sobre a execução do projeto. Nele, mostra o processo de criação e listagem das contas bancárias. E como podemos ver, existem várias outras funcionalidades para serem exploradas.
   
+  ![Insomnia-2023-08-23-00-09-31](https://github.com/mirellaor/desafio-modulo02-cubosacademy/assets/125171061/ad35cd1d-ddde-447c-aa4d-136dccc907ce)
+
 
