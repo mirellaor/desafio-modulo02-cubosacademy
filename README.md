@@ -157,7 +157,7 @@ Esse endpoint deverá listar as transações realizadas de uma conta específica
   
 Por enquanto, ainda não vimos como integrar o banco de dados na nossa API, então os dados foram todos persistidos em memória dentro de um arquivo.
 
-### Observações
+### Observações sobre a execução do projeto
 
 - Para executar o projeto, é preciso que vc instale todos os pacotes e dependecias na sua máquina.
 - Para facilitar, disponibilizei o arquivo do insomnia para testar todas as rotas e funcionalidades.
