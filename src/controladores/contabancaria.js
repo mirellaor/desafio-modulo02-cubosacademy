@@ -7,7 +7,7 @@ function criarConta(req, res) {
     const novaConta = { numero, saldo, usuario };
     contas.push(novaConta);
 
-    res.status(201);
+    res.status(201).json({ mensagem: "Conta criada." });
     numero++;
 }
 
@@ -18,14 +18,14 @@ function listarContas(req, res) {
 function atualizarConta(req, res) {
     const { numeroConta } = req.params;
     contas[numeroConta - 1].usuario = req.body;
-    res.status(201);
+    res.status(201).json({ mensagem: "Conta atualizada." });
 }
 
 function excluirConta(req, res) {
     const { numeroConta } = req.params;
     const posicaoNumeroConta = (contas.findIndex((conta) => conta.numero === Number(numeroConta)));
     contas.splice(posicaoNumeroConta, 1);
-    res.status(201);
+    res.status(201).json({ mensagem: "Conta excluida." });
 }
 
 module.exports = {
