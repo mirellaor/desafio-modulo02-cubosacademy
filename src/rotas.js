@@ -14,5 +14,6 @@ rotas.post('/transacoes/depositar', intermediadores.verificaNumeroeDeposito, int
 rotas.post('/transacoes/sacar', intermediadores.verificaNumeroValoreSenha, intermediadores.verificaExistenciaConta, intermediadores.verificaSenhaValida, intermediadores.verificaSaldoSaque, transacoes.sacar);
 rotas.post('/transacoes/transferir', intermediadores.verificacaoTransferencia, intermediadores.verificaContasOrigemDestino, intermediadores.verificaSenhaOrigem, intermediadores.verificaSaldoOrigem, transacoes.transferir);
 rotas.get('/contas/saldo', intermediadores.verificaContaSenhaQuery, intermediadores.verificaContaExisteQuery, intermediadores.verificaSenhaQuery, transacoes.consultarSaldo);
+rotas.get('/contas/extrato', intermediadores.verificaContaSenhaQuery, intermediadores.verificaContaExisteQuery, intermediadores.verificaSenhaQuery, transacoes.emitirExtrato);
 
 module.exports = rotas;
